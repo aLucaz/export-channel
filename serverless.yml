@@ -1,0 +1,32 @@
+service: backoffice-export
+frameworkVersion: '3'
+provider:
+  name: aws
+  versionFunctions: false
+  runtime: nodejs12.x
+  apiGateway:
+    shouldStartNameWithService: true
+  stage: dev
+  region: us-east-1
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - 'sqs:SendMessage'
+        - 'sqs:GetQueueUrl'
+      Resource:
+        - 'arn:aws:sqs:us-east-1::qas-flow-export'
+    - Effect: Allow
+      Action:
+        - 'dynamodb:PutItem'
+      Resource:
+        - 'arn:aws:dynamodb:us-east-1::table/export_request_metadata'
+functions:
+  channel:
+    handler: src/app.handler
+    events:
+      - httpApi:
+          path: /export
+          method: post
+plugins:
+  - serverless-plugin-reducer
+  - serverless-offline

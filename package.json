@@ -1,0 +1,14 @@
+{
+  "name": "export-channel",
+  "scripts": {
+    "start": "serverless offline start --stage dev --httpPort 8000 --websocketPort 8001 --lambdaPort 8002"
+  },
+  "keywords": [],
+  "author": "Arturo Lucas",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.1306.0",
+    "serverless-offline": "^12.0.4",
+    "serverless-plugin-reducer": "^4.0.1"
+  }
+}
